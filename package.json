@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "biome check --fix"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
@@ -14,8 +15,12 @@
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.9.1",
+    "partysocket": "^1.1.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
   }
 }
