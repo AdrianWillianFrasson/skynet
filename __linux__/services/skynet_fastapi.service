@@ -8,7 +8,7 @@ ExecStart=/home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
 WorkingDirectory=/home/orangepi/Documents/skynet
 Restart=always
 RestartSec=10
-User=orangepi
+User=root
 Environment=NODE_ENV=production
 StandardOutput=journal
 StandardError=journal

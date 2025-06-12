@@ -1,5 +1,5 @@
 #!/bin/bash
 cd /home/orangepi/Documents/skynet
-git reset --hard || true
-git clean -fd || true
-git pull || true
+sudo git reset --hard || true
+sudo git clean -fd || true
+sudo git pull || true

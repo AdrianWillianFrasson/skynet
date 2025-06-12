@@ -7,7 +7,7 @@ Wants=network-online.target
 Type=oneshot
 WorkingDirectory=/home/orangepi/Documents/skynet
 ExecStart=/home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
-User=orangepi
+User=root
 RemainAfterExit=false
 
 [Install]
