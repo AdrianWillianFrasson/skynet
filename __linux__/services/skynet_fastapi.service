@@ -1,0 +1,17 @@
+[Unit]
+Description=skynet_fastapi
+After=network.target skynet_update.service
+Wants=network-online.target skynet_update.service
+
+[Service]
+ExecStart=/home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
+WorkingDirectory=/home/orangepi/Documents/skynet
+Restart=always
+RestartSec=5
+User=orangepi
+Environment=NODE_ENV=production
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

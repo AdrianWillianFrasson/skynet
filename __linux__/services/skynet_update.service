@@ -1,0 +1,14 @@
+[Unit]
+Description=skynet_update
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/orangepi/Documents/skynet
+ExecStart=/home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
+User=orangepi
+RemainAfterExit=false
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=skynet_astro
+After=network.target skynet_update.service
+Wants=network-online.target skynet_update.service
+
+[Service]
+ExecStart=/home/orangepi/Documents/skynet/__linux__/services/skynet_astro.sh
+WorkingDirectory=/home/orangepi/Documents/skynet
+Restart=always
+RestartSec=5
+User=orangepi
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
