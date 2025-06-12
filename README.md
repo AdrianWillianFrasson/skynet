@@ -18,13 +18,13 @@ sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.servi
 ```
 
 ```
-chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
-chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
-chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.sh
+sudo chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
+sudo chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
+sudo chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.sh
 
-chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
-chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
-chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.sh
+sudo chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
+sudo chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
+sudo chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.sh
 ```
 
 ```
