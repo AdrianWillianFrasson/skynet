@@ -4,11 +4,11 @@ After=network.target skynet_update.service
 Wants=network-online.target skynet_update.service
 
 [Service]
-ExecStart=/home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
-WorkingDirectory=/home/orangepi/Documents/skynet
+WorkingDirectory=/home/orangepi/Documents/services
+ExecStart=/home/orangepi/Documents/services/skynet_fastapi.sh
+User=orangepi
 Restart=always
 RestartSec=10
-User=root
 Environment=NODE_ENV=production
 StandardOutput=journal
 StandardError=journal

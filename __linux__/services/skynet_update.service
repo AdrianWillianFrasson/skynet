@@ -5,10 +5,12 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-WorkingDirectory=/home/orangepi/Documents/skynet
-ExecStart=/home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
-User=root
+WorkingDirectory=/home/orangepi/Documents/services
+ExecStart=/home/orangepi/Documents/services/skynet_update.sh
+User=orangepi
 RemainAfterExit=false
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target

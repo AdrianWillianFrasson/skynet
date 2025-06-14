@@ -9,7 +9,21 @@ sudo ln -s "$NVM_DIR/versions/node/$(nvm version)/bin/npx" "/usr/local/bin/npx"
 sudo ln -s "/home/orangepi/.pyenv/shims/fastapi" "/usr/local/bin/fastapi"
 ```
 
+```
+cd /home/orangepi/Documents
+git clone https://github.com/AdrianWillianFrasson/skynet.git
+```
+
+```
+cd /home/orangepi/Documents/skynet
+git config --global --add safe.directory "*"
+```
+
 ## Linux services
+
+```
+sudo cp -r -f /home/orangepi/Documents/skynet/__linux__/services /home/orangepi/Documents/services
+```
 
 ```
 sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_update.service /etc/systemd/system/skynet_update.service
@@ -18,13 +32,13 @@ sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.servi
 ```
 
 ```
-sudo chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
-sudo chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
-sudo chmod +x /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.sh
+sudo chmod +x /home/orangepi/Documents/services/skynet_update.sh
+sudo chmod +x /home/orangepi/Documents/services/skynet_fastapi.sh
+sudo chmod +x /home/orangepi/Documents/services/skynet_astro.sh
 
-sudo chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_update.sh
-sudo chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.sh
-sudo chown orangepi:orangepi /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.sh
+sudo chown orangepi:orangepi /home/orangepi/Documents/services/skynet_update.sh
+sudo chown orangepi:orangepi /home/orangepi/Documents/services/skynet_fastapi.sh
+sudo chown orangepi:orangepi /home/orangepi/Documents/services/skynet_astro.sh
 ```
 
 ```
