@@ -4,9 +4,9 @@
 #define RELAY_4 42
 #define RELAY_5 45
 #define RELAY_6 46
-
 #define BUZZER 21
 
+// -----------------------------------------------------------------------------
 void setup() {
   Serial.begin(115200);
 
@@ -19,37 +19,68 @@ void setup() {
 }
 
 void loop() {
-  uint P1 = random(1000);
-  uint P2 = random(1000);
-  uint P3 = random(1000);
+  uint p1 = random(1000);
+  uint p2 = random(1000);
+  uint p3 = random(1000);
 
-  Serial.print(String("P1:") + String(P1) + String(";"));
-  Serial.print(String("P2:") + String(P2) + String(";"));
-  Serial.print(String("P3:") + String(P3) + String(";"));
+  sendSerial("p1", String(p1));
+  sendSerial("p2", String(p2));
+  sendSerial("p3", String(p3));
 
-  digitalWrite(RELAY_1, HIGH);
-  digitalWrite(RELAY_2, HIGH);
-  digitalWrite(RELAY_3, HIGH);
-  digitalWrite(RELAY_4, HIGH);
-  digitalWrite(RELAY_5, HIGH);
-  digitalWrite(RELAY_6, HIGH);
+  readSerial();
 
-  vTaskDelay(pdMS_TO_TICKS(2000));
-
-  digitalWrite(RELAY_1, LOW);
-  digitalWrite(RELAY_2, LOW);
-  digitalWrite(RELAY_3, LOW);
-  digitalWrite(RELAY_4, LOW);
-  digitalWrite(RELAY_5, LOW);
-  digitalWrite(RELAY_6, LOW);
-
-  vTaskDelay(pdMS_TO_TICKS(2000));
+  vTaskDelay(pdMS_TO_TICKS(100));
 }
 
-void serialEvent() {
-  if (Serial.available()) {
-    String cmd = Serial.readStringUntil(';');
+// -----------------------------------------------------------------------------
+void sendSerial(String cmd, String value) {
+  Serial.print(cmd + String(":") + value + String(";"));
+}
 
-    Serial.print(String("rcv:") + String(cmd) + String(";"));
+void readSerial() {
+  while (Serial.available()) {
+    String data = Serial.readStringUntil(';');
+    onSerialData(data);
+  }
+}
+
+void onSerialData(String data) {
+  if (data.startsWith("sync:")) {
+    sendSerial("rly1", String(digitalRead(RELAY_1)));
+    sendSerial("rly2", String(digitalRead(RELAY_2)));
+    sendSerial("rly3", String(digitalRead(RELAY_3)));
+    sendSerial("rly4", String(digitalRead(RELAY_4)));
+    sendSerial("rly5", String(digitalRead(RELAY_5)));
+    sendSerial("rly6", String(digitalRead(RELAY_6)));
+
+  } else if (data.startsWith("rly1:")) {
+    int value = data.substring(5).toInt();
+    digitalWrite(RELAY_1, value);
+    sendSerial("rly1", String(value));
+
+  } else if (data.startsWith("rly2:")) {
+    int value = data.substring(5).toInt();
+    digitalWrite(RELAY_2, value);
+    sendSerial("rly2", String(value));
+
+  } else if (data.startsWith("rly3:")) {
+    int value = data.substring(5).toInt();
+    digitalWrite(RELAY_3, value);
+    sendSerial("rly3", String(value));
+
+  } else if (data.startsWith("rly4:")) {
+    int value = data.substring(5).toInt();
+    digitalWrite(RELAY_4, value);
+    sendSerial("rly4", String(value));
+
+  } else if (data.startsWith("rly5:")) {
+    int value = data.substring(5).toInt();
+    digitalWrite(RELAY_5, value);
+    sendSerial("rly5", String(value));
+
+  } else if (data.startsWith("rly6:")) {
+    int value = data.substring(5).toInt();
+    digitalWrite(RELAY_6, value);
+    sendSerial("rly6", String(value));
   }
 }

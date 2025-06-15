@@ -1,0 +1,11 @@
+---
+import { IHM as Page } from "@/components/IHM/IHM";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="flex w-full bg-gray-300 border-gray-400 shadow border-b p-4">
+    Skynet - IHM
+  </div>
+  <Page client:only />
+</Layout>

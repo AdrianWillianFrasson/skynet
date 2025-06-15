@@ -17,6 +17,7 @@ git clone https://github.com/AdrianWillianFrasson/skynet.git
 ```
 cd /home/orangepi/Documents/skynet
 git config --global --add safe.directory "*"
+npm install
 ```
 
 ## Linux services
@@ -32,13 +33,13 @@ sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.servi
 ```
 
 ```
-sudo chmod +x /home/orangepi/Documents/services/skynet_update.sh
-sudo chmod +x /home/orangepi/Documents/services/skynet_fastapi.sh
-sudo chmod +x /home/orangepi/Documents/services/skynet_astro.sh
+sudo chown -R orangepi:orangepi /home/orangepi/Documents/services
+sudo chown -R orangepi:orangepi /home/orangepi/Documents/skynet
+```
 
-sudo chown orangepi:orangepi /home/orangepi/Documents/services/skynet_update.sh
-sudo chown orangepi:orangepi /home/orangepi/Documents/services/skynet_fastapi.sh
-sudo chown orangepi:orangepi /home/orangepi/Documents/services/skynet_astro.sh
+```
+sudo chmod -R u+rwX /home/orangepi/Documents/services
+sudo chmod -R u+rwX /home/orangepi/Documents/skynet
 ```
 
 ```

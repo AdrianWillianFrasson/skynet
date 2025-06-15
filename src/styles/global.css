@@ -1,1 +1,11 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark;
+}
+
+html,
+body {
+  @apply flex flex-col size-full overflow-auto;
+  @apply antialiased;
+  @apply font-mono;
+}

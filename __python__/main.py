@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket
-import aioserial
+from aioserial import AioSerial
 import asyncio
 
 
@@ -16,28 +16,63 @@ class ClientsManager:
         if client in self.clients:
             self.clients.remove(client)
 
-    async def broadcast(self, message: str):
+    async def broadcast(self, cmd: str, value: str):
+        tasks = []
+
         for client in self.clients:
             try:
-                await client.send_text(message)
+                tasks.append(client.send_json({cmd: value}))
 
             except Exception:
                 clientsManager.pop_client(client)
 
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+
+class SerialManager:
+    def __init__(self):
+        self.serial: AioSerial = None
+
+    def set_serial(self, serial: AioSerial):
+        self.serial = serial
+
+    async def send_data(self, data: dict):
+        print(data)
+        if not (self.serial and self.serial.writable()):
+            return
+
+        tasks = []
+
+        for key, value in data.items():
+            tasks.append(self.serial.write_async(f"{key}:{value};".encode()))
+
+        await asyncio.gather(*tasks, return_exceptions=True)
+
 
 clientsManager = ClientsManager()
+serialManager = SerialManager()
 
 
-async def read_serial():
+async def on_serial_data(data: str):
+    cmd, value = data.split(":", 1)
+
+    if not (cmd and value):
+        return
+
+    await clientsManager.broadcast(cmd, value)
+
+
+async def open_serial():
     while True:
         try:
-            serial = aioserial.AioSerial(port="COM7")
+            serial = AioSerial(port="COM7", baudrate=115200)
+            serialManager.set_serial(serial)
 
             while True:
                 data_raw = await serial.read_until_async(b";")
                 data = data_raw.decode(errors="ignore")
 
-                await clientsManager.broadcast(data)
+                asyncio.create_task(on_serial_data(data[:-1]))
 
         except Exception:
             try:
@@ -51,7 +86,7 @@ async def read_serial():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    asyncio.create_task(read_serial())
+    asyncio.create_task(open_serial())
     yield
 
 
@@ -74,8 +109,8 @@ async def ws(websocket: WebSocket):
 
     try:
         while True:
-            data = await websocket.receive_text()
-            print(data)
+            data = await websocket.receive_json()
+            asyncio.create_task(serialManager.send_data(data))
 
     except Exception:
         try:
