@@ -35,18 +35,14 @@ sudo cp -r -f /home/orangepi/Documents/skynet/__linux__/services /home/orangepi/
 
 ```
 sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_update.service /etc/systemd/system/skynet_update.service
+sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_kiosk.service /etc/systemd/system/skynet_kiosk.service
 sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_fastapi.service /etc/systemd/system/skynet_fastapi.service
 sudo cp -f /home/orangepi/Documents/skynet/__linux__/services/skynet_astro.service /etc/systemd/system/skynet_astro.service
 ```
 
 ```
-sudo chown -R orangepi:orangepi /home/orangepi/Documents/services
-sudo chown -R orangepi:orangepi /home/orangepi/Documents/skynet
-```
-
-```
-sudo chmod -R u+rwX /home/orangepi/Documents/services
-sudo chmod -R u+rwX /home/orangepi/Documents/skynet
+sudo chown -R orangepi:orangepi /home/orangepi/Documents
+sudo chmod -R +rwx /home/orangepi/Documents
 ```
 
 ```
@@ -54,6 +50,7 @@ sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 
 sudo systemctl enable skynet_update.service
+sudo systemctl enable skynet_kiosk.service
 sudo systemctl enable skynet_fastapi.service
 sudo systemctl enable skynet_astro.service
 ```
@@ -62,6 +59,7 @@ Status:
 
 ```
 sudo systemctl status skynet_update.service
+sudo systemctl status skynet_kiosk.service
 sudo systemctl status skynet_fastapi.service
 sudo systemctl status skynet_astro.service
 ```
@@ -71,4 +69,11 @@ Logs:
 ```
 journalctl -u skynet_fastapi.service -f
 journalctl -u skynet_astro.service -f
+```
+
+## Keyboard access
+
+```
+Ctrl + Alt + F1 -> Terminal
+Ctrl + Alt + F7 -> Return kiosk
 ```
