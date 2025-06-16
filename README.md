@@ -30,6 +30,7 @@ ls -l /dev/serial/by-id/
 ## Linux services
 
 ```
+sudo rm -r /home/orangepi/Documents/services
 sudo cp -r -f /home/orangepi/Documents/skynet/__linux__/services /home/orangepi/Documents/services
 ```
 
