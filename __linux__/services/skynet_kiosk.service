@@ -1,0 +1,14 @@
+[Unit]
+Description=skynet_kiosk
+After=graphical.target network.target skynet_astro.service
+Wants=graphical.target skynet_astro.service
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/home/orangepi/Documents/services/skynet_kiosk.sh
+User=orangepi
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=graphical.target

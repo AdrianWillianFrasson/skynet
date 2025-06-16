@@ -9,6 +9,7 @@ ExecStart=/home/orangepi/Documents/services/skynet_astro.sh
 User=orangepi
 Restart=always
 RestartSec=10
+Environment=NODE_ENV=production
 StandardOutput=journal
 StandardError=journal
 
