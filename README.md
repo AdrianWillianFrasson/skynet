@@ -20,6 +20,13 @@ git config --global --add safe.directory "*"
 npm install
 ```
 
+## Linux/ESP32 USB
+
+```
+ls /dev/ttyACM*
+ls -l /dev/serial/by-id/
+```
+
 ## Linux services
 
 ```

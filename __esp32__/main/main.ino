@@ -4,6 +4,10 @@
 #define RELAY_4 42
 #define RELAY_5 45
 #define RELAY_6 46
+
+#define RS485_TX 17
+#define RS485_RX 18
+
 #define BUZZER 21
 
 // -----------------------------------------------------------------------------

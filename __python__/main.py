@@ -5,6 +5,11 @@ import asyncio
 
 
 # ------------------------------------------------------------------------------
+# SERIAL_PORT = "COM7"
+SERIAL_PORT = "/dev/ttyACM0"
+
+
+# ------------------------------------------------------------------------------
 class ClientsManager:
     def __init__(self):
         self.clients: list[WebSocket] = []
@@ -65,7 +70,7 @@ async def on_serial_data(data: str):
 async def open_serial():
     while True:
         try:
-            serial = AioSerial(port="COM7", baudrate=115200)
+            serial = AioSerial(port=SERIAL_PORT, baudrate=115200)
             serialManager.set_serial(serial)
 
             while True:
