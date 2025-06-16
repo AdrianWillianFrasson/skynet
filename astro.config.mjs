@@ -7,6 +7,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   integrations: [react()],
   server: {
+    allowedHosts: true,
     host: true,
     port: 80,
   },
