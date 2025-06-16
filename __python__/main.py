@@ -43,6 +43,7 @@ class SerialManager:
 
     async def send_data(self, data: dict):
         print(data)
+
         if not (self.serial and self.serial.writable()):
             return
 
@@ -71,7 +72,9 @@ async def open_serial():
     while True:
         try:
             serial = AioSerial(port=SERIAL_PORT, baudrate=115200)
+
             serialManager.set_serial(serial)
+            await serialManager.send_data({"sync": "1"})
 
             while True:
                 data_raw = await serial.read_until_async(b";")
