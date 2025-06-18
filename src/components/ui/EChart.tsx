@@ -6,7 +6,7 @@ const DEFAULT_OPTION = {
   grid: {
     top: "20",
     left: "15",
-    right: "15",
+    right: "20",
     containLabel: true,
   },
 };

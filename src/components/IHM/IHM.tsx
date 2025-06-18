@@ -126,7 +126,7 @@ export function IHM() {
       );
 
       if ("p1" in parsedData) {
-        if (dataX.length >= 100) {
+        if (dataX.length >= 20) {
           setDataX((old) => [...old.slice(1), event.timeStamp]);
           setDataP1((old) => [...old.slice(1), parsedData?.p1 as number]);
           setDataP2((old) => [...old.slice(1), parsedData?.p2 as number]);
