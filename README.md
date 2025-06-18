@@ -68,6 +68,7 @@ sudo systemctl status skynet_astro.service
 Logs:
 
 ```
+journalctl -u skynet_update.service -f
 journalctl -u skynet_fastapi.service -f
 journalctl -u skynet_astro.service -f
 ```

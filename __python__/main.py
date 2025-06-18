@@ -21,12 +21,12 @@ class ClientsManager:
         if client in self.clients:
             self.clients.remove(client)
 
-    async def broadcast(self, cmd: str, value: str):
+    async def broadcast(self, data: dict):
         tasks = []
 
         for client in self.clients:
             try:
-                tasks.append(client.send_json({cmd: value}))
+                tasks.append(client.send_json(data))
 
             except Exception:
                 clientsManager.pop_client(client)
@@ -42,8 +42,6 @@ class SerialManager:
         self.serial = serial
 
     async def send_data(self, data: dict):
-        print(data)
-
         if not (self.serial and self.serial.writable()):
             return
 
@@ -60,12 +58,20 @@ serialManager = SerialManager()
 
 
 async def on_serial_data(data: str):
-    cmd, value = data.split(":", 1)
+    package = {}
 
-    if not (cmd and value):
-        return
+    commands = data.split(",")
 
-    await clientsManager.broadcast(cmd, value)
+    for command in commands:
+        key_value = command.split(":", 1)
+
+        if len(key_value) != 2:
+            continue
+
+        package[key_value[0]] = key_value[1]
+
+    if package:
+        await clientsManager.broadcast(package)
 
 
 async def open_serial():
