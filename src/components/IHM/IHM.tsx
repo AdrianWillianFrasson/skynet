@@ -1,3 +1,4 @@
+import { actions } from "astro:actions";
 import { useState, useMemo } from "react";
 import { EChart } from "@/components/ui/EChart";
 import { Button } from "@/components/ui/Button";
@@ -158,7 +159,20 @@ export function IHM() {
             <span>{`Peso 1: ${data.p1} kg`}</span>
             <span>{`Peso 2: ${data.p2} kg`}</span>
             <span>{`Peso 3: ${data.p3} kg`}</span>
-            <Button className="btn btn-neutral">test</Button>
+            <Button
+              className="btn btn-neutral"
+              onClick={async () => {
+                const { data, error } = await actions.myAction({ name: "jesus" });
+
+                console.log(error);
+
+                if (!error) {
+                  console.log(data);
+                }
+              }}
+            >
+              test
+            </Button>
           </div>
         </Card>
 
