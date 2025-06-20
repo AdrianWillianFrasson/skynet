@@ -1,4 +1,4 @@
-import { db, User, Sensor, SensorData } from "astro:db";
+import { db, Sensor } from "astro:db";
 
 // https://astro.build/db/seed
 export default async function seed() {

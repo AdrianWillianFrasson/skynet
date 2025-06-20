@@ -1,11 +1,12 @@
 import { actions } from "astro:actions";
-import { useState, useMemo } from "react";
-import { EChart } from "@/components/ui/EChart";
-import { Button } from "@/components/ui/Button";
-import { Toggle } from "@/components/ui/Toggle";
-import { Card } from "@/components/ui/Card";
-import { useWebSocket } from "partysocket/react";
 import type { EChartsOption } from "echarts";
+import { useWebSocket } from "partysocket/react";
+import { useMemo, useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { EChart } from "@/components/ui/EChart";
+import { Select } from "@/components/ui/Select";
+import { Toggle } from "@/components/ui/Toggle";
 
 const DATA_PARSE_MAP: Record<string, (v: string) => number | boolean> = {
   p1: Number.parseFloat,
@@ -27,6 +28,9 @@ export function IHM() {
   const [dataP2, setDataP2] = useState<number[]>([]);
   const [dataP3, setDataP3] = useState<number[]>([]);
 
+  const [names, setNames] = useState<string[]>([]);
+  const [name, setName] = useState<string>("");
+
   const [data, setData] = useState({
     p1: 0,
     p2: 0,
@@ -41,22 +45,61 @@ export function IHM() {
 
   const option: EChartsOption = useMemo(
     () => ({
-      tooltip: {
-        trigger: "axis",
-      },
       dataZoom: [
         {
-          type: "inside",
-          start: 0,
           end: 100,
+          start: 0,
+          type: "inside",
         },
         {
-          start: 0,
           end: 100,
+          start: 0,
         },
       ],
       legend: {
         data: ["Peso 1", "Peso 2", "Peso 3"],
+      },
+      series: [
+        {
+          data: dataP1,
+          lineStyle: {
+            shadowBlur: 10,
+            shadowColor: "rgba(0,0,0,0.3)",
+            shadowOffsetY: 8,
+            width: 3,
+          },
+          name: "Peso 1",
+          smooth: true,
+          type: "line",
+        },
+        {
+          data: dataP2,
+          lineStyle: {
+            shadowBlur: 10,
+            shadowColor: "rgba(0,0,0,0.3)",
+            shadowOffsetY: 8,
+            width: 3,
+          },
+          name: "Peso 2",
+          smooth: true,
+          type: "line",
+        },
+        {
+          data: dataP3,
+          lineStyle: {
+            color: "#ee6666",
+            shadowBlur: 10,
+            shadowColor: "rgba(0,0,0,0.3)",
+            shadowOffsetY: 8,
+            width: 3,
+          },
+          name: "Peso 3",
+          smooth: true,
+          type: "line",
+        },
+      ],
+      tooltip: {
+        trigger: "axis",
       },
       xAxis: {
         data: dataX,
@@ -65,53 +108,11 @@ export function IHM() {
       yAxis: {
         type: "value",
       },
-      series: [
-        {
-          name: "Peso 1",
-          data: dataP1,
-          type: "line",
-          smooth: true,
-          lineStyle: {
-            width: 3,
-            shadowColor: "rgba(0,0,0,0.3)",
-            shadowBlur: 10,
-            shadowOffsetY: 8,
-          },
-        },
-        {
-          name: "Peso 2",
-          data: dataP2,
-          type: "line",
-          smooth: true,
-          lineStyle: {
-            width: 3,
-            shadowColor: "rgba(0,0,0,0.3)",
-            shadowBlur: 10,
-            shadowOffsetY: 8,
-          },
-        },
-        {
-          name: "Peso 3",
-          data: dataP3,
-          type: "line",
-          smooth: true,
-          lineStyle: {
-            color: "#ee6666",
-            width: 3,
-            shadowColor: "rgba(0,0,0,0.3)",
-            shadowBlur: 10,
-            shadowOffsetY: 8,
-          },
-        },
-      ],
     }),
     [dataX, dataP1, dataP2, dataP3],
   );
 
   const ws = useWebSocket(url, undefined, {
-    onOpen(_) {
-      ws.send(JSON.stringify({ sync: 1 }));
-    },
     onMessage(event) {
       const newData = JSON.parse(event.data);
 
@@ -142,6 +143,9 @@ export function IHM() {
 
       setData((old) => ({ ...old, ...parsedData }));
     },
+    onOpen(_) {
+      ws.send(JSON.stringify({ sync: 1 }));
+    },
   });
 
   function sendData(event: React.ChangeEvent<HTMLInputElement>) {
@@ -159,45 +163,48 @@ export function IHM() {
             <span>{`Peso 1: ${data.p1} kg`}</span>
             <span>{`Peso 2: ${data.p2} kg`}</span>
             <span>{`Peso 3: ${data.p3} kg`}</span>
-            <Button
-              className="btn btn-neutral"
-              onClick={async () => {
-                const { data, error } = await actions.myAction({ name: "jesus" });
-
-                if (!error) {
-                  console.log(data);
-                }
-              }}
-            >
-              test
-            </Button>
           </div>
+        </Card>
+
+        <Card className="size-full gap-1 text-nowrap">
+          <Select onChange={setName} options={names} value={name} />
+          <Button
+            className="btn btn-neutral"
+            onClick={async () => {
+              const { data, error } = await actions.user.getAll();
+
+              if (!error) {
+                setNames(data.map((user) => user.name));
+              }
+            }}>
+            Atualizar
+          </Button>
         </Card>
 
         <Card className="size-full gap-1 text-nowrap">
           <div className="flex">
             <span>RLY 1:</span>
-            <Toggle value={"rly1"} checked={data.rly1} onChange={sendData} />
+            <Toggle checked={data.rly1} onChange={sendData} value={"rly1"} />
           </div>
           <div className="flex">
             <span>RLY 2:</span>
-            <Toggle value={"rly2"} checked={data.rly2} onChange={sendData} />
+            <Toggle checked={data.rly2} onChange={sendData} value={"rly2"} />
           </div>
           <div className="flex">
             <span>RLY 3:</span>
-            <Toggle value={"rly3"} checked={data.rly3} onChange={sendData} />
+            <Toggle checked={data.rly3} onChange={sendData} value={"rly3"} />
           </div>
           <div className="flex">
             <span>RLY 4:</span>
-            <Toggle value={"rly4"} checked={data.rly4} onChange={sendData} />
+            <Toggle checked={data.rly4} onChange={sendData} value={"rly4"} />
           </div>
           <div className="flex">
             <span>RLY 5:</span>
-            <Toggle value={"rly5"} checked={data.rly5} onChange={sendData} />
+            <Toggle checked={data.rly5} onChange={sendData} value={"rly5"} />
           </div>
           <div className="flex">
             <span>RLY 6:</span>
-            <Toggle value={"rly6"} checked={data.rly6} onChange={sendData} />
+            <Toggle checked={data.rly6} onChange={sendData} value={"rly6"} />
           </div>
         </Card>
       </div>

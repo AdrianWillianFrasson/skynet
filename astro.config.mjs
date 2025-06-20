@@ -7,14 +7,15 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: node({
+    mode: "standalone",
+  }),
   integrations: [db(), react()],
-
   server: {
     allowedHosts: true,
     host: true,
     port: 80,
   },
-
   vite: {
     plugins: [tailwindcss()],
     resolve: {
@@ -23,8 +24,4 @@ export default defineConfig({
       },
     },
   },
-
-  adapter: node({
-    mode: "standalone",
-  }),
 });

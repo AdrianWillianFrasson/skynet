@@ -1,13 +1,13 @@
-import { useRef, useEffect } from "react";
-import { init, getInstanceByDom } from "echarts";
-import type { EChartsOption, EChartsInitOpts } from "echarts";
+import type { EChartsInitOpts, EChartsOption } from "echarts";
+import { getInstanceByDom, init } from "echarts";
+import { useEffect, useRef } from "react";
 
 const DEFAULT_OPTION = {
   grid: {
-    top: "20",
+    containLabel: true,
     left: "15",
     right: "20",
-    containLabel: true,
+    top: "20",
   },
 };
 
@@ -48,8 +48,8 @@ export function EChart({
     <div
       ref={chartRef}
       style={{
-        width: "100%",
         height: "100%",
+        width: "100%",
       }}
     />
   );

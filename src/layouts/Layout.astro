@@ -13,6 +13,12 @@ import "@/styles/global.css";
   </head>
 
   <body>
-    <slot />
+    <div class="flex w-full bg-gray-300 border-gray-400 shadow border-b p-4">
+      Skynet - IHM
+    </div>
+
+    <div class="flex flex-col size-full overflow-auto">
+      <slot />
+    </div>
   </body>
 </html>

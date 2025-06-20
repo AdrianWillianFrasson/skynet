@@ -1,10 +1,10 @@
-import { defineDb, defineTable, column, sql, NOW } from "astro:db";
+import { column, defineDb, defineTable, NOW, sql } from "astro:db";
 
 const User = defineTable({
   columns: {
-    id: column.text({ primaryKey: true, default: sql`uuid()` }),
-    name: column.text({ default: "" }),
     age: column.number({ default: 0 }),
+    id: column.text({ default: sql`uuid()`, primaryKey: true }),
+    name: column.text({ default: "" }),
   },
 });
 
@@ -27,8 +27,8 @@ const SensorData = defineTable({
 // https://astro.build/db/config
 export default defineDb({
   tables: {
-    User,
     Sensor,
     SensorData,
+    User,
   },
 });
