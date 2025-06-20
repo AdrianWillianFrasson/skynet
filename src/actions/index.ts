@@ -1,5 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import { db, SensorData } from "astro:db";
 
 export const server = {
   myAction: defineAction({
@@ -7,8 +8,9 @@ export const server = {
       name: z.string(),
     }),
     handler: async (input) => {
-      console.log(`hello ${input.name}`);
-      return { value: 10 };
+      const data = await db.select().from(SensorData);
+
+      return { data };
     },
   }),
 };

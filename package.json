@@ -4,12 +4,17 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build --remote",
     "preview": "astro preview",
     "astro": "astro",
+    "db_verify": "astro db verify --remote",
+    "db_push": "astro db push --remote",
+    "db_seed": "astro db execute ./db/seed.ts --remote",
     "check": "biome check --fix"
   },
   "dependencies": {
+    "@astrojs/db": "^0.15.0",
+    "@astrojs/node": "^9.2.2",
     "@astrojs/react": "^4.3.0",
     "@tailwindcss/vite": "^4.1.8",
     "@types/react": "^19.1.6",

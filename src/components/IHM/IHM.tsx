@@ -164,8 +164,6 @@ export function IHM() {
               onClick={async () => {
                 const { data, error } = await actions.myAction({ name: "jesus" });
 
-                console.log(error);
-
                 if (!error) {
                   console.log(data);
                 }

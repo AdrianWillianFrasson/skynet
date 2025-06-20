@@ -8,3 +8,4 @@ git pull
 
 npm install
 npm run build
+npm run db_push
